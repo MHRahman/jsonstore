@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
@@ -33,7 +34,9 @@ public class DataController {
 	@RequestMapping(method=RequestMethod.GET, value="/{collection}/{field}/{value}")
 	@ResponseBody
 	public Object getRecordsByStringFieldValue(@PathVariable String collection, @PathVariable String field, @PathVariable String value) {
-		FindIterable<Document> find2 = db.getCollection(collection).find(new Document(field, value));
+		BasicDBObject q = new BasicDBObject();
+		q.put(field,  Pattern.compile(value, Pattern.CASE_INSENSITIVE));
+		FindIterable<Document> find2 = db.getCollection(collection).find(q);
 	    List<Document> docs= new ArrayList<Document>();
 	    for (Document doc : find2) docs.add(doc);
 	    if (docs.size() < 1) return Document.parse("{}");
