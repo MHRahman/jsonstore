@@ -26,9 +26,15 @@ import com.mongodb.client.result.DeleteResult;
 @RestController
 public class DataController {
 	MongoDatabase db;
+	static String getenv(String key, String Default) {
+		if (System.getenv(key) == null) {
+			return Default;
+		}
+		return System.getenv(key);
+	}
 	public DataController() {
-		String mongodbhost= System.getProperty("MONGO_DB_HOST");
-		int mongodbport= Integer.parseInt(System.getProperty("MONGO_DB_PORT"));
+		String mongodbhost= getenv("MONGO_DB_HOST", "localhost");
+		int mongodbport= Integer.parseInt(getenv("MONGO_DB_PORT", "27017"));
 		System.out.println("Trying to connect to mongodb on " + mongodbhost + " at port " + mongodbport );
 		MongoClient mc= new MongoClient(mongodbhost, mongodbport);
 		db= mc.getDatabase("mydb");
