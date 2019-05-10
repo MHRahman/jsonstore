@@ -28,21 +28,12 @@ public class JsonStoreTests {
 
     @Before
     public void setUp() {
-    	MockMv
+  
     }
 
     @Test
-    public void setsIdOnSave() {
-    	HttpClient
+    public void TeTest() {
+    	assert(true);
     }
-
-    @Test
-    public void findsByLastName() {
-
-    }
-
-    @Test
-    public void findsByExample() {
-
-    }
+    
 }
