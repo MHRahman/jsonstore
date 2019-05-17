@@ -34,7 +34,12 @@ public class DataController {
 	}
 	public DataController() {
 		String mongodbhost= getenv("MONGO_DB_HOST", "localhost");
-		int mongodbport= Integer.parseInt(getenv("MONGO_DB_PORT", "27017"));
+		int mongodbport= 27017;
+		try {
+     	  mongodbport= Integer.parseInt(getenv("MONGO_DB_PORT", "27017"));
+		} catch (NumberFormatException nfe) {
+			
+		}
 		System.out.println("Trying to connect to mongodb on " + mongodbhost + " at port " + mongodbport );
 		MongoClient mc= new MongoClient(mongodbhost, mongodbport);
 		db= mc.getDatabase("mydb");
